@@ -1,11 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-const FeedbackOptions = ({ goodFeedback, neutralFeedback, badFeedback }) => {
+const FeedbackOptions = ({ options }) => {
   return (
     <div>
-      <button onClick={goodFeedback}>Good</button>
-      <button onClick={neutralFeedback}>Neutral</button>
-      <button onClick={badFeedback}>Bad</button>
+      {options.map((option, index) => (
+        <button key={index} onClick={option.btn}>
+          {option.name}
+        </button>
+      ))}
     </div>
   );
 };

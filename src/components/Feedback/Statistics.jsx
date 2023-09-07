@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 const Statistics = ({ good, neutral, bad, total, positivePercentage }) => {
   return (
@@ -7,7 +7,7 @@ const Statistics = ({ good, neutral, bad, total, positivePercentage }) => {
       <p>Neutral:{neutral}</p>
       <p>Bad:{bad}</p>
       <p>Total:{total}</p>
-      {/* <p>Positive feedback:{positivePercentage}</p> */}
+      <p>Positive feedback:{positivePercentage}%</p>
     </div>
   );
 };
