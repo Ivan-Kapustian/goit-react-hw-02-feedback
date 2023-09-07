@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import FeedbackOptions from './FeedbackOptions';
 import Section from './Section';
 import Statistics from './Statistics';
+import Notification from './Notification';
 
 class Feedback extends Component {
   state = {
@@ -30,10 +31,14 @@ class Feedback extends Component {
     }));
   };
   options = [
-    { name: 'Good', btn: this.goodFeedback },
-    { name: 'Neutral', btn: this.neutralFeedback },
-    { name: 'Bad', btn: this.badFeedback },
+    { name: 'Good', leaveFeedback: this.goodFeedback },
+    { name: 'Neutral', leaveFeedback: this.neutralFeedback },
+    { name: 'Bad', leaveFeedback: this.badFeedback },
   ];
+  countTotalFeedback = () => {
+    const { good, neutral, bad } = this.state;
+    return good + neutral + bad;
+  };
   countPositiveFeedbackPercentage() {
     const { good, total } = this.state;
     const percentage = total > 0 ? (good / total) * 100 : 0;
@@ -41,17 +46,25 @@ class Feedback extends Component {
   }
 
   render() {
+    const totalFeedback = this.countTotalFeedback();
+    const isFeedbackGiven = totalFeedback > 0;
+
     return (
       <div>
-        <Section title="Statistics">
-          <Statistics
-            good={this.state.good}
-            neutral={this.state.neutral}
-            bad={this.state.bad}
-            total={this.state.total}
-            positivePercentage={this.countPositiveFeedbackPercentage()}
-          />
-        </Section>
+        {isFeedbackGiven ? (
+          <Section title="Statistics">
+            <Statistics
+              good={this.state.good}
+              neutral={this.state.neutral}
+              bad={this.state.bad}
+              total={totalFeedback}
+              positivePercentage={this.countPositiveFeedbackPercentage()}
+            />
+          </Section>
+        ) : (
+          <Notification message="There is no feedback" />
+        )}
+
         <Section title="Please leave feedback">
           <FeedbackOptions options={this.options} />
         </Section>
